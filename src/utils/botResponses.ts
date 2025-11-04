@@ -20,21 +20,8 @@ export const getBotResponse = (userMessage: string): BotResponse => {
     };
   }
 
-  // Loan application
-  if (msg.includes('apply') || msg.includes('loan') || msg.includes('need money')) {
-    return {
-      message: "Great! We offer several types of loans:\n\n1. Business Loan - For growing your business\n2. Personal Loan - For personal needs\n3. MSME Loan - For micro, small & medium enterprises\n\nWhich type of loan are you interested in?",
-      options: [
-        "Business Loan",
-        "Personal Loan",
-        "MSME Loan",
-        "Not sure, need help deciding"
-      ]
-    };
-  }
-
-  // Business loan
-  if (msg.includes('business loan')) {
+  // Business loan (check specific types first)
+  if (msg.includes('business loan') || msg.includes('business')) {
     return {
       message: "Business Loans from KRUX Finance:\n\n✓ Loan amount: ₹5 Lakh to ₹50 Crore\n✓ Interest rates starting from 10.5%\n✓ Tenure: Up to 5 years\n✓ Quick approval in 48 hours\n\nRequired documents:\n• PAN & Aadhaar\n• Business registration proof\n• Last 2 years ITR\n• Bank statements (6 months)\n• GST registration\n\nWould you like to proceed with the application?",
       options: [
@@ -47,7 +34,7 @@ export const getBotResponse = (userMessage: string): BotResponse => {
   }
 
   // Personal loan
-  if (msg.includes('personal loan')) {
+  if (msg.includes('personal loan') || msg.includes('personal')) {
     return {
       message: "Personal Loans from KRUX Finance:\n\n✓ Loan amount: ₹50,000 to ₹25 Lakh\n✓ Interest rates starting from 11.5%\n✓ Tenure: Up to 3 years\n✓ Minimal documentation\n✓ Quick disbursal\n\nRequired documents:\n• PAN & Aadhaar\n• Salary slips (last 3 months)\n• Bank statements (6 months)\n• Employment proof\n\nShall we begin your application?",
       options: [
@@ -68,6 +55,19 @@ export const getBotResponse = (userMessage: string): BotResponse => {
         "Eligibility criteria",
         "Required documents",
         "Talk to expert"
+      ]
+    };
+  }
+
+  // Loan application (general - after specific types)
+  if (msg.includes('apply') || msg.includes('loan') || msg.includes('need money')) {
+    return {
+      message: "Great! We offer several types of loans:\n\n1. Business Loan - For growing your business\n2. Personal Loan - For personal needs\n3. MSME Loan - For micro, small & medium enterprises\n\nWhich type of loan are you interested in?",
+      options: [
+        "Business Loan",
+        "Personal Loan",
+        "MSME Loan",
+        "Not sure, need help deciding"
       ]
     };
   }
