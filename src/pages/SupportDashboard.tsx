@@ -33,11 +33,19 @@ const SupportDashboard = () => {
 
   const activeTicket = chatState.tickets.find(t => t.id === chatState.activeTicketId);
 
-  const filteredTickets = chatState.tickets.filter(ticket =>
-    ticket.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    ticket.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    ticket.customerPhone.includes(searchQuery)
-  );
+  const filteredTickets = chatState.tickets.filter(ticket => {
+    const query = searchQuery.toLowerCase();
+    const matchesBasicInfo = 
+      ticket.customerName.toLowerCase().includes(query) ||
+      ticket.id.toLowerCase().includes(query) ||
+      ticket.customerPhone.includes(query);
+    
+    const matchesMessages = ticket.messages.some(msg => 
+      msg.content.toLowerCase().includes(query)
+    );
+    
+    return matchesBasicInfo || matchesMessages;
+  });
 
   const handleSendReply = () => {
     if (!replyMessage.trim() || !activeTicket) return;
